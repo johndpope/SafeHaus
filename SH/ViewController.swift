@@ -7,7 +7,8 @@
 //
 
 import Mapbox
-
+import SwiftyJSON
+import Alamofire
 
 class ViewController:  UIViewController, MGLMapViewDelegate {
     
@@ -18,16 +19,16 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         block.getBlock("BlockData")
+        //block.calculateAllCrime("crimeCategoryData")
         //intialize map
         MapView = MGLMapView(frame: view.bounds)
         MapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         view.addSubview(MapView)
         MapView.delegate = self
         //make touch possible(temp)
-        let coordinateFinder = UILongPressGestureRecognizer(target: self, action: "revealRegionDetailsWithLongPressOnMap:")
+        let coordinateFinder = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.revealRegionDetailsWithLongPressOnMap(_:)))
         coordinateFinder.minimumPressDuration = 0.5
         MapView.addGestureRecognizer(coordinateFinder)
-  
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -42,7 +43,7 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
         let userLocation = gestureRecognizer.locationInView(MapView)
         //converts the touch location to coordinates
         let locationCoordinate = MapView.convertPoint(userLocation, toCoordinateFromView: MapView)
-        let mapCirlce = polygonCircleForCoordinate(locationCoordinate, withMeterRadius: 400)
+        let mapCirlce = polygonCircleForCoordinate(locationCoordinate, withMeterRadius: 200)
         mapCirlce.title = "userLocation"
         // converts coordinates to MGLCoordinateBounds
         //draw neighborhood and return polygon for reference
@@ -82,10 +83,147 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
                 //add the blocks to the map
                 block.blockygon[i].title = "block"
                 MapView.addAnnotation(block.blockygon[i])
+                queryForMeters(block.createMeterSearchString(block.searchStrings[i]))
+                queryForCrime(block.createCrimeSearchString(block.searchStrings[i]))
             }
         }
         //add neighborhood to map
         //MapView.addAnnotation(currentNeighborhood)
+    }
+    
+    func queryForMeters(SearchString: String) {
+        SingletonB.sharedInstance.meters.removeAll(keepCapacity: false)
+        let query = SearchString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        Alamofire.request(.GET, query).responseJSON { (response) in
+            var json = JSON(data: response.data!)
+            if(json.count != 0){
+                for i in 0...json.count-1{
+                    var data = json[i]
+                    var location = data["location"]
+                    var coordinates = location["coordinates"]
+                    if (coordinates != "null"){
+                        let x = CGFloat(coordinates[1].floatValue)
+                        let y = CGFloat(coordinates[0].floatValue)
+                        let point = CLLocationCoordinate2DMake(CLLocationDegrees(x), CLLocationDegrees(y))
+                        let meter = MGLPointAnnotation()
+                        //MGLPolyline(coordinates: &point, count: 1)
+                        meter.coordinate = point
+                        meter.title = "meter"
+                        self.MapView.addAnnotation(meter)
+                    }
+                }
+            }
+        }
+    }
+    
+    func queryForCrime(SearchString: String) {
+        var cityCrime = 0.0
+        let query = SearchString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        Alamofire.request(.GET, query).responseJSON { (response) in
+            var json = JSON(data: response.data!)
+            if(json.count != 0){
+                for i in 0...json.count-1{
+                    var data = json[i]
+                    let tempCategory = data["category"].stringValue
+                    if(tempCategory == "ARSON"){
+                        cityCrime += 221.93
+                    }
+                        
+                    else if(tempCategory == "ASSAULT"){
+                        cityCrime += 5630.52
+                    }
+                        
+                    else if(tempCategory == "BURGLARY"){
+                        cityCrime += 273.12
+                    }
+                        
+                    else if(tempCategory == "DISORDERLY CONDUCT"){
+                        cityCrime += 43.647
+                    }
+                        
+                    else if(tempCategory == "DRUG/NARCOTIC"){
+                        cityCrime += 260.57
+                    }
+                        
+                    else if(tempCategory == "EXTORTION"){
+                        cityCrime += 247.97
+                    }
+                        
+                    else if(tempCategory == "FORGERY/COUNTERFEITING"){
+                        cityCrime += 234.38
+                    }
+                        
+                    else if(tempCategory == "FRAUD"){
+                        cityCrime += 134.11
+                    }
+                        
+                    else if(tempCategory == "GAMBLING"){
+                        cityCrime += 5.708
+                    }
+                        
+                    else if(tempCategory == "KIDNAPPING"){
+                        cityCrime += 293.17
+                    }
+                        
+                    else if(tempCategory == "LARCENY/THEFT"){
+                        cityCrime += 160.54
+                    }
+                        
+                    else if(tempCategory == "LIQUOR LAWS"){
+                        cityCrime += 6.493
+                    }
+                        
+                    else if(tempCategory == "PROSTITUTION"){
+                        cityCrime += 353.18
+                    }
+                        
+                    else if(tempCategory == "ROBBERY"){
+                        cityCrime += 523.33
+                    }
+                        
+                    else if(tempCategory == "SECONDARY CODES"){
+                        cityCrime += 43.647
+                    }
+                        
+                    else if(tempCategory == "SEX OFFENSES, FORCIBLE"){
+                        cityCrime += 507.15
+                    }
+                        
+                    else if(tempCategory == "SEX OFFENSES, NON FORCIBLE"){
+                        cityCrime += 365.7
+                    }
+                        
+                    else if(tempCategory == "STOLEN PROPERTY"){
+                        cityCrime += 131.01
+                    }
+                        
+                    else if(tempCategory == "SUSPICIOUS OCC"){
+                        cityCrime += 43.647
+                    }
+                        
+                    else if(tempCategory == "TRESPASS"){
+                        cityCrime += 29.958
+                    }
+                        
+                    else if(tempCategory == "VANDALISM"){
+                        cityCrime += 71.852
+                    }
+                        
+                    else if(tempCategory == "VEHICLE THEFT"){
+                        cityCrime += 72.912
+                    }
+                        
+                    else if(tempCategory == "WEAPON LAWS"){
+                        cityCrime += 225.79
+                    }
+                        
+                    else{
+                        cityCrime += 0
+                    }
+               }
+                print(cityCrime)
+            }
+        }
     }
     
     func polygonCircleForCoordinate(coordinate: CLLocationCoordinate2D, withMeterRadius: Double) -> MGLPolygon {
@@ -98,7 +236,7 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
         let centerLonRadians: Double = coordinate.longitude * M_PI / 180
         var coordinates = [CLLocationCoordinate2D]()
         //array to hold all the points
-        for var index = 0; index < Int(numberOfPoints); index++ {
+        for index in 0 ..< Int(numberOfPoints) {
             let degrees: Double = Double(index) * Double(degreesBetweenPoints)
             let degreeRadians: Double = degrees * M_PI / 180
             let pointLatRadians: Double = asin(sin(centerLatRadians) * cos(distRadians) + cos(centerLatRadians) * sin(distRadians) * cos(degreeRadians))
@@ -112,12 +250,29 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
        return polygon
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func mapView(mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
         return 0.5
     }
     func mapView(mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         
-        return UIColor.whiteColor()
+        return UIColor.redColor()
+    }
+    
+    func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
+        // Set the line width for polyline annotations
+        return 5.0
     }
     
     func mapView(mapView: MGLMapView, fillColorForPolygonAnnotation annotation: MGLPolygon) -> UIColor {
@@ -130,8 +285,20 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
         else if(annotation.title == "block"){
             return UIColor(red: 59/255, green: 178/255, blue: 208/255, alpha: 1)
         }
-        else{return UIColor.whiteColor()}
+        else if(annotation.title == "meter"){
+            return UIColor.redColor()
+        }
+        else{return UIColor.redColor()}
 
+    }
+    
+    // Use the default marker; see our custom marker example for more information
+    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        return nil
+    }
+    
+    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
     }
     
 

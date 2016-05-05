@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24539771AE5582FA53B67E69 /* Pods_SH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82599EBE0259CEA168C18F02 /* Pods_SH.framework */; };
+		A16870ED1CDBEDEB00B35484 /* crimeCategoryData.json in Resources */ = {isa = PBXBuildFile; fileRef = A16870EC1CDBEDEB00B35484 /* crimeCategoryData.json */; };
+		A1B2769C1CD54B2200F4807C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B276991CD54B2200F4807C /* Alamofire.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A1B2769D1CD54B2200F4807C /* Pods_SH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2769A1CD54B2200F4807C /* Pods_SH.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A1B2769E1CD54B2200F4807C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2769B1CD54B2200F4807C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CF37669B1CBB27EC00044041 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37669A1CBB27EC00044041 /* DataManager.swift */; };
 		CF37669D1CBB285300044041 /* neighborhood.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF37669C1CBB285300044041 /* neighborhood.plist */; };
-		CF4043031CC69CF10025B9E6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4043021CC69CF10025B9E6 /* Pods.framework */; };
 		CFAE139E1CBB068900BAFE62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE139D1CBB068900BAFE62 /* AppDelegate.swift */; };
 		CFAE13A01CBB068900BAFE62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE139F1CBB068900BAFE62 /* ViewController.swift */; };
 		CFAE13A31CBB068900BAFE62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFAE13A11CBB068900BAFE62 /* Main.storyboard */; };
@@ -19,11 +21,8 @@
 		CFAE13AB1CBB068900BAFE62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFAE13A91CBB068900BAFE62 /* LaunchScreen.storyboard */; };
 		CFAE13B61CBB068A00BAFE62 /* SHTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE13B51CBB068A00BAFE62 /* SHTests.swift */; };
 		CFAE13C11CBB068A00BAFE62 /* SHUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAE13C01CBB068A00BAFE62 /* SHUITests.swift */; };
-		CFAE13D51CBB096F00BAFE62 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAE13D41CBB096F00BAFE62 /* Mapbox.framework */; };
 		CFAE13D61CBB096F00BAFE62 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CFAE13D41CBB096F00BAFE62 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CFFCDB541CC69162003877F1 /* BlockData.json in Resources */ = {isa = PBXBuildFile; fileRef = CFFCDB531CC69162003877F1 /* BlockData.json */; };
-		CFFCDB561CC691C9003877F1 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFCDB551CC691C9003877F1 /* Alamofire.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		CFFCDB581CC691CC003877F1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFCDB571CC691CC003877F1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +59,10 @@
 /* Begin PBXFileReference section */
 		31CAEF2BD843299AD1C95AE3 /* Pods-SH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SH.release.xcconfig"; path = "Pods/Target Support Files/Pods-SH/Pods-SH.release.xcconfig"; sourceTree = "<group>"; };
 		82599EBE0259CEA168C18F02 /* Pods_SH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A16870EC1CDBEDEB00B35484 /* crimeCategoryData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = crimeCategoryData.json; sourceTree = "<group>"; };
+		A1B276991CD54B2200F4807C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
+		A1B2769A1CD54B2200F4807C /* Pods_SH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_SH.framework; path = "Pods/../build/Debug-iphoneos/Pods_SH.framework"; sourceTree = "<group>"; };
+		A1B2769B1CD54B2200F4807C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		C5F20B150C7149AB59702175 /* Pods-SH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SH.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SH/Pods-SH.debug.xcconfig"; sourceTree = "<group>"; };
 		CF37669A1CBB27EC00044041 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		CF37669C1CBB285300044041 /* neighborhood.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = neighborhood.plist; sourceTree = "<group>"; };
@@ -90,11 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFFCDB581CC691CC003877F1 /* SwiftyJSON.framework in Frameworks */,
-				CF4043031CC69CF10025B9E6 /* Pods.framework in Frameworks */,
-				CFFCDB561CC691C9003877F1 /* Alamofire.framework in Frameworks */,
-				CFAE13D51CBB096F00BAFE62 /* Mapbox.framework in Frameworks */,
-				24539771AE5582FA53B67E69 /* Pods_SH.framework in Frameworks */,
+				A1B2769C1CD54B2200F4807C /* Alamofire.framework in Frameworks */,
+				A1B2769D1CD54B2200F4807C /* Pods_SH.framework in Frameworks */,
+				A1B2769E1CD54B2200F4807C /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +119,9 @@
 		4189E9C9EA269F0277EFB441 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1B276991CD54B2200F4807C /* Alamofire.framework */,
+				A1B2769A1CD54B2200F4807C /* Pods_SH.framework */,
+				A1B2769B1CD54B2200F4807C /* SwiftyJSON.framework */,
 				CFFCDB571CC691CC003877F1 /* SwiftyJSON.framework */,
 				CFFCDB551CC691C9003877F1 /* Alamofire.framework */,
 				CF4043021CC69CF10025B9E6 /* Pods.framework */,
@@ -171,6 +175,7 @@
 				CFAE13AC1CBB068900BAFE62 /* Info.plist */,
 				CFAE13A41CBB068900BAFE62 /* SH.xcdatamodeld */,
 				CF37669C1CBB285300044041 /* neighborhood.plist */,
+				A16870EC1CDBEDEB00B35484 /* crimeCategoryData.json */,
 				CFFCDB531CC69162003877F1 /* BlockData.json */,
 			);
 			path = SH;
@@ -266,6 +271,7 @@
 				TargetAttributes = {
 					CFAE13991CBB068900BAFE62 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = UT7G3LKZ29;
 					};
 					CFAE13B01CBB068A00BAFE62 = {
 						CreatedOnToolsVersion = 7.2;
@@ -306,6 +312,7 @@
 				CFAE13AB1CBB068900BAFE62 /* LaunchScreen.storyboard in Resources */,
 				CFAE13A81CBB068900BAFE62 /* Assets.xcassets in Resources */,
 				CFAE13A31CBB068900BAFE62 /* Main.storyboard in Resources */,
+				A16870ED1CDBEDEB00B35484 /* crimeCategoryData.json in Resources */,
 				CFFCDB541CC69162003877F1 /* BlockData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +530,8 @@
 			baseConfigurationReference = C5F20B150C7149AB59702175 /* Pods-SH.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(inherited)",
@@ -533,6 +542,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Christopher-Brummer.SH";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -541,6 +551,8 @@
 			baseConfigurationReference = 31CAEF2BD843299AD1C95AE3 /* Pods-SH.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(inherited)",
@@ -551,6 +563,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Christopher-Brummer.SH";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
