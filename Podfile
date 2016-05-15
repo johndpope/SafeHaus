@@ -10,6 +10,8 @@ use_frameworks!
 
 pod 'Alamofire', '~> 3.2.1'
 
+pod 'SlideMenuControllerSwift'
+
 use_frameworks!
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 

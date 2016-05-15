@@ -82,7 +82,7 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
             if(block.blockygon[i].intersectsOverlayBounds(userLocation.overlayBounds)){
                 //add the blocks to the map
                 block.blockygon[i].title = "block"
-                MapView.addAnnotation(block.blockygon[i])
+                //MapView.addAnnotation(block.blockygon[i])
                 queryForMeters(block.createMeterSearchString(block.searchStrings[i]))
                 queryForCrime(block.createCrimeSearchString(block.searchStrings[i]))
             }
@@ -92,11 +92,11 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
     }
     
     func queryForMeters(SearchString: String) {
-        SingletonB.sharedInstance.meters.removeAll(keepCapacity: false)
         let query = SearchString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         Alamofire.request(.GET, query).responseJSON { (response) in
             var json = JSON(data: response.data!)
             if(json.count != 0){
+                var streetNum = [Int:CLLocationCoordinate2D]()
                 for i in 0...json.count-1{
                     var data = json[i]
                     var location = data["location"]
@@ -106,10 +106,30 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
                         let y = CGFloat(coordinates[0].floatValue)
                         let point = CLLocationCoordinate2DMake(CLLocationDegrees(x), CLLocationDegrees(y))
                         let meter = MGLPointAnnotation()
+                        streetNum[data["street_num"].intValue] = point
                         //MGLPolyline(coordinates: &point, count: 1)
                         meter.coordinate = point
-                        meter.title = "meter"
+                        meter.title = "Hello world!"//data["cap_color"].stringValue
                         self.MapView.addAnnotation(meter)
+                    }
+                }
+                
+                var sortedKeys = streetNum.keys.sort()
+                var meterTrack = [CLLocationCoordinate2D]()
+                for i in 0...sortedKeys.count-1{
+                    if(i+1 < sortedKeys.count){
+                        let backward = sortedKeys[i+1] - sortedKeys[i]
+                        let forward = sortedKeys[i] - sortedKeys[i+1]
+                        if((abs(backward) == 2 ) || (abs(forward) == 2)){
+                            meterTrack.append(streetNum[sortedKeys[i]]!)
+                        }
+                        else{
+                            meterTrack.append(streetNum[sortedKeys[i]]!)
+                            let polyLine = MGLPolyline(coordinates: &meterTrack, count: UInt(meterTrack.count))
+                            self.MapView.addAnnotation(polyLine)
+                            meterTrack.removeAll(keepCapacity: false)
+                            
+                        }
                     }
                 }
             }
@@ -221,7 +241,6 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
                         cityCrime += 0
                     }
                }
-                print(cityCrime)
             }
         }
     }
@@ -256,18 +275,104 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
     
     
     
+    /*func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        print(annotation.title!!)
+        if(String(annotation.title!) == "Yellow"){
+            var image = UIImage(named: "map-point-yellow.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Yellow")
+        }
+        
+        else if(annotation.title!! == "Red"){
+            var image = UIImage(named: "map-point-red.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Red")
+        }
+            
+        else if(annotation.title!! == "Brown"){
+            var image = UIImage(named: "map-point-brown.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Brown")
+        }
+        
+        else if(annotation.title!! == "Green"){
+            var image = UIImage(named: "map-point-green.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Green")
+        }
+        
+        else if(annotation.title!! == "Blue"){
+            var image = UIImage(named: "map-point-blue.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Blue")
+        }
+            
+        else if(annotation.title!! == "Black"){
+            var image = UIImage(named: "map-point-black.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Black")
+        }
+            
+        else if(annotation.title!! == "Purple"){
+            var image = UIImage(named: "map-point-purple.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Purple")
+        }
+        
+        else{
+            var image = UIImage(named: "map-point-grey.png")!
+            
+            image = image.imageWithAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+            
+            return  MGLAnnotationImage(image: image, reuseIdentifier: "Grey")
+        }
     
+
+    }*/
     
+    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        // Always allow callouts to popup when annotations are tapped
+        return true
+    }
     
+    func mapView(mapView: MGLMapView, calloutViewForAnnotation annotation: MGLAnnotation) -> UIView? {
+        // Only show callouts for `Hello world!` annotation
+        if annotation.respondsToSelector(Selector("title")) && annotation.title! == "Hello world!" {
+            // Instantiate and return our custom callout view
+            return CustomCalloutView(representedObject: annotation)
+        }
+        return nil
+    }
     
-    
-    
+    func mapView(mapView: MGLMapView, tapOnCalloutForAnnotation annotation: MGLAnnotation) {
+        // Optionally handle taps on the callout
+        print("Tapped the callout for: \(annotation)")
+        
+        // Hide the callout
+        mapView.deselectAnnotation(annotation, animated: true)
+    }
+
     func mapView(mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
         return 0.5
     }
+    
     func mapView(mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         
-        return UIColor.redColor()
+        return UIColor.blueColor()
     }
     
     func mapView(mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
@@ -288,19 +393,9 @@ class ViewController:  UIViewController, MGLMapViewDelegate {
         else if(annotation.title == "meter"){
             return UIColor.redColor()
         }
-        else{return UIColor.redColor()}
+        else{return UIColor.blueColor()}
 
     }
-    
-    // Use the default marker; see our custom marker example for more information
-    func mapView(mapView: MGLMapView, imageForAnnotation annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        return nil
-    }
-    
-    func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-    
 
     
 }

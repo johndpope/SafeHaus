@@ -85,9 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-SH/Alamofire.framework"
+  install_framework "Pods-SH/SlideMenuControllerSwift.framework"
   install_framework "Pods-SH/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-SH/Alamofire.framework"
+  install_framework "Pods-SH/SlideMenuControllerSwift.framework"
   install_framework "Pods-SH/SwiftyJSON.framework"
 fi

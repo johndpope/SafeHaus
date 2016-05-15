@@ -222,18 +222,4 @@ class BlockData {
         }
         print(cityCrime)
     }
-    
-}
-
-class SingletonB {
-    
-    var meters = [CLLocationCoordinate2D]()
-    
-    class var sharedInstance : SingletonB {
-        struct Static {
-            static let instance : SingletonB = SingletonB()
-        }
-        
-        return Static.instance
-    }
 }
